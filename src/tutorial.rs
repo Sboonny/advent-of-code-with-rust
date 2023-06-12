@@ -1,3 +1,5 @@
+use std::io::{BufReader, BufRead};
+use std::fs::File;
 use clap::Parser;
 #[derive(Parser)]
 struct Cli {
@@ -6,9 +8,10 @@ struct Cli {
 }
 
 fn main() {
-    let _args = Cli::parse();
-    let args: Vec<String> = std::env::args().collect();
-
-    println!("My path is {}.", args[0]);
-    println!("I got {:?} arguments: {:?}.", args.len() - 1, &args[1..]);
+    let args = Cli::parse();
+    let file = File::open(&args.path).expect("could not read file");
+    let mut content = BufReader::new(file);
+    let mut line =  String::new();
+    let len = content.read_line(&mut line); 
+    println!("here is the length: {:?}", len);
 }
