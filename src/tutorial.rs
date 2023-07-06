@@ -10,8 +10,13 @@ struct Cli {
 fn main() {
     let args = Cli::parse();
     let file = File::open(&args.path).expect("could not read file");
-    let mut content = BufReader::new(file);
-    let mut line =  String::new();
-    let len = content.read_line(&mut line); 
-    println!("here is the length: {:?}", len);
+    let content = BufReader::new(file);
+    for line in content.lines() {
+        match line {
+            Ok(line) => {
+                println!("{}", line);
+            },
+            _ => {}
+        }
+    }
 }
