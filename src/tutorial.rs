@@ -7,7 +7,7 @@ struct Cli {
     path: std::path::PathBuf,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Cli::parse();
     let file = File::open(&args.path).expect("could not read file");
     let content = BufReader::new(file);
@@ -16,7 +16,8 @@ fn main() {
             Ok(line) => {
                 println!("{}", line);
             },
-            _ => {}
+            Err(error) => { return Err(error.into()); }
         }
     }
+    Ok(())
 }
