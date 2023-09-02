@@ -27,3 +27,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     warn!("oops, issue happened while reading the file.");
     Ok(())
 }
+
+fn answer() -> i32 {
+    42
+}
+
+#[test]
+fn check_answer_validity() {
+    assert_eq!(answer(), 42);
+}
