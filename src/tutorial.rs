@@ -9,16 +9,11 @@ struct Cli {
     path: std::path::PathBuf,
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    env_logger::init();
-    let args = Cli::parse();
-    let file = File::open(&args.path).with_context(|| format!("could not read file `{}`", args.path.display()))?;
-    info!("Reading the file.");
-    let content = BufReader::new(file);
+fn read_file(content: BufReader<File>, mut writer: impl std::io::Write) -> Result<(), Box<dyn std::error::Error>> {
     for line in content.lines() {
         match line {
             Ok(line) => {
-                println!("{}", line);
+                writeln!(writer, "{}", line).ok();
             },
             Err(error) => { return {
                 Err(error.into())}; }
@@ -28,11 +23,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn answer() -> i32 {
-    42
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    env_logger::init();
+    let args = Cli::parse();
+    let file = File::open(&args.path).with_context(|| format!("could not read file `{}`", args.path.display()))?;
+    info!("Reading the file.");
+    let content = BufReader::new(file);
+    read_file(content, &mut std::io::stdout())
 }
 
-#[test]
-fn check_answer_validity() {
-    assert_eq!(answer(), 42);
-}
+
+// ToDo: figure out how to read a file in a test and expect its context.
+// #[test]
+// fn file_is_read() {
+//     let mut result = Vec::new();
+//     let path = "src/tutorial.rs";
+//     let file = File::open(path);
+//     let content = BufReader::new(file);
+//     read_file(content, &mut result);
+//     assert_eq!(result, b"lorem ipsum\n");
+// }
