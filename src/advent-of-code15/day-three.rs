@@ -22,23 +22,41 @@ let west: char = '<';
 
 let mut deliveried_houses: i32 = 1;
 let mut santa_position: (i32, i32) = (0, 0);
+let mut robot_position: (i32, i32) = (0, 0);
 let mut visited_houses: Vec<(i32, i32)> = vec![(0, 0)];
-let mut index = 0;
+let mut index = 1;
 
-for c in input.chars().step_by(2) {
-    if c == north {
-        santa_position.1 += 1;
-    } else if c == south {
-        santa_position.1 -= 1;
-    } else if c == east {
-        santa_position.0 += 1;
-    } else if c == west {
-        santa_position.0 -= 1;
+for c in input.chars() {
+    if index % 2 == 1 {
+        if c == north {
+            santa_position.1 += 1;
+        } else if c == south {
+            santa_position.1 -= 1;
+        } else if c == east {
+            santa_position.0 += 1;
+        } else if c == west {
+            santa_position.0 -= 1;
+        }
+        if !visited_houses.contains(&santa_position) {
+            deliveried_houses += 1;
+            visited_houses.push(santa_position);
+        }
+    } else {
+        if c == north {
+            robot_position.1 += 1;
+        } else if c == south {
+            robot_position.1 -= 1;
+        } else if c == east {
+            robot_position.0 += 1;
+        } else if c == west {
+            robot_position.0 -= 1;
+        }
+        if !visited_houses.contains(&robot_position) {
+            deliveried_houses += 1;
+            visited_houses.push(robot_position);
+        }
     }
-    if !visited_houses.contains(&santa_position) {
-        deliveried_houses += 1;
-        visited_houses.push(santa_position);
-    }
+    index += 1;
 }
 println!("{}", deliveried_houses);
 }
