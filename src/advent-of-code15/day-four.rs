@@ -12,7 +12,7 @@ use md5::{Md5, Digest};
 
 fn main() {
     let decoded_string: &str = "bgvyzdsv";
-    let pattern =  "00000";
+    let pattern =  "000000";
     let mut i = 0;
     let mut found = false;
     while !found {
