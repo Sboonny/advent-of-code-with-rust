@@ -19,9 +19,30 @@ fn main() {
     let input: String = std::fs::read_to_string("src/advent-of-code15/day-five-input.txt")
         .expect("couldn't read the file, check if day-three-input.txt exists.");
 
-    // let vowels = ['a', 'e', 'i', 'o', 'u'];
-    // let forbidden = ["ab", "cd", "pq", "xy"];
-    // let mut the_amount_of_nice_strings = 0;
+    let vowels: [char; 5] = ['a', 'e', 'i', 'o', 'u'];
+    let forbidden_char: [&str; 4] = ["ab", "cd", "pq", "xy"];
+    let mut the_amount_of_nice_strings: i32 = 0;
 
-    println!("{}", input);
+    for line in input.lines() {
+        let mut vowel_count: i32 = 0;
+        let mut double_letter: bool = false;
+        let mut forbidden_string: bool = false;
+        let mut last_char: char = ' ';
+        for c in line.chars() {
+            if vowels.contains(&c) {
+               vowel_count += 1;
+            }
+            if c == last_char {
+                double_letter = true;
+            }
+            if forbidden_char.contains(&format!("{}{}", last_char, c).as_str()) {
+                forbidden_string = true;
+            }
+            last_char = c;
+        }
+        if vowel_count >= 3 && double_letter && !forbidden_string {
+            the_amount_of_nice_strings += 1;
+        }
+    }
+    print!("The amount of nice strings is: {}", the_amount_of_nice_strings)
 }
