@@ -5,7 +5,7 @@ edition = "2021"
 
 [[bin]]
 name = "aoc"
-path = "src/advent-of-code15/day-five.rs"
+path = "src/advent-of-code23/day-one.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
