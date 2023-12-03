@@ -14,5 +14,12 @@ use std::fs;
 
 fn main() {
   let input = fs::read_to_string("src/advent-of-code23/day-one-input.txt").expect("");
-  println!("{}", input)  
+  let mut sum: u32 = 0;
+  for line in input.lines() {
+      let digit = line.chars();
+      let first_digit = digit.clone().filter(|char| char.is_numeric()).next().unwrap().to_digit(10).unwrap();
+      let second_digit = digit.clone().filter(|char| char.is_numeric()).last().unwrap().to_digit(10).unwrap();
+      sum += first_digit* 10 +  second_digit;
+  }
+  print!("{}", sum)
 }
