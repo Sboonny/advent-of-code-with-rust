@@ -1,4 +1,4 @@
-- To start the project run:
+- To start the project, pick a branch and run:
 
 ```console
 cargo run
