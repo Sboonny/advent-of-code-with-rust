@@ -5,13 +5,11 @@ edition = "2021"
 
 [[bin]]
 name = "aoc"
-path = "src/advent-of-code23/day-one.rs"
+path = "src/day-one.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 anyhow = "1.0.75"
 clap = { version = "4.3.3", features = ["derive"] }
-env_logger = "0.10.0"
 log = "0.4.20"
-md-5 = "0.10.6"
